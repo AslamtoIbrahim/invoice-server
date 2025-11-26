@@ -11,18 +11,18 @@ export const auth = betterAuth({
   }),
   emailAndPassword: { enabled: true },
   advanced: {
-    // defaultCookieAttributes: {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: 'none',
-    // },
+    defaultCookieAttributes: {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    },
     disableOriginCheck: true,
   },
   // ⛔ You have to add GOOGLE_CLIENT_ID in env file
-  // socialProviders: {
-  //   google: {
-  //     clientId: process.env.GOOGLE_CLIENT_ID as string,
-  //     clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-  //   },
-  // },
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
+  },
 });
