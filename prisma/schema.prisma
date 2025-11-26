@@ -17,7 +17,7 @@ model BillFrom {
   id       String    @id @default(uuid()) @db.Uuid
   street   String
   city     String
-  posCode  String
+  postCode String
   country  String
   invoices Invoice[]
 }
@@ -28,7 +28,7 @@ model BillTo {
   email    String
   street   String
   city     String
-  posCode  String
+  postCode String
   country  String
   invoices Invoice[]
 }
@@ -38,14 +38,17 @@ model Invoice {
   createdAt   DateTime @default(now())
   updateAt    DateTime @updatedAt
   code        String
-  date        DateTime
-  paymentTerm DateTime
-  items       Item[]
-  status      Status
-  billTo      BillTo   @relation(fields: [billToId], references: [id])
-  billToId    String   @db.Uuid
   billFrom    BillFrom @relation(fields: [billFromId], references: [id])
   billFromId  String   @db.Uuid
+  billTo      BillTo   @relation(fields: [billToId], references: [id])
+  billToId    String   @db.Uuid
+  date        DateTime @default(now())
+  paymentTerm DateTime
+  status      Status   @default(DRAFT)
+  description String
+  items       Item[]
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String?
 }
 
 model Item {
@@ -74,6 +77,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  invoices      Invoice[]
 
   @@unique([email])
   @@map("user")
