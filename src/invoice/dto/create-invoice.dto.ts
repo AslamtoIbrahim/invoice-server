@@ -1,4 +1,3 @@
-import { $Enums } from 'generated/prisma/index.js';
 import { BillFrom, BillTo, Item } from '../types/invoice.types.js';
 
 export class CreateInvoiceDto {
@@ -8,6 +7,6 @@ export class CreateInvoiceDto {
   code: string;
   date: Date;
   paymentTerm: Date;
-  status: $Enums.Status;
+  status: 'DRAFT' | 'PAID' | 'PENDING';
   description: string;
 }
