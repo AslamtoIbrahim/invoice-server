@@ -5,7 +5,7 @@ import { PrismaService } from '../prisma/prisma.service.js';
 const prisma = new PrismaService();
 
 export const auth = betterAuth({
-  trustedOrigins: ['http://localhost:3000','https://invoice-server-steel.vercel.app', 'http://localhost:5173'],
+  trustedOrigins: ['http://localhost:3000','https://invoice-server-steel.vercel.app', 'http://localhost:5173', 'https://eloquent-mousse-74eb8e.netlify.app'],
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),

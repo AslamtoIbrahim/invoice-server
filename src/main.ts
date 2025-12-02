@@ -6,7 +6,7 @@ async function bootstrap() {
     bodyParser: false,
   });
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'https://eloquent-mousse-74eb8e.netlify.app'],
     credentials: true,
   });
   await app.listen(process.env.PORT ?? 3000, () => {
