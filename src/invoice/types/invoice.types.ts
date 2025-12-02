@@ -21,3 +21,5 @@ export type Item = {
   total: number;
   invoiceId: string | null;
 };
+
+export type Status = "PAID" | "PENDING" | "DRAFT" 

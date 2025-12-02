@@ -21,7 +21,7 @@ model Invoice {
   billFrom    Json
   billTo      Json
   date        DateTime @default(now())
-  paymentTerm DateTime
+  paymentTerm String
   status      Status   @default(DRAFT)
   description String
   items       Json

@@ -14,6 +14,7 @@ import { Session } from '@thallesp/nestjs-better-auth';
 import { CreateInvoiceDto } from './dto/create-invoice.dto.js';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto.js';
 import { InvoiceService } from './invoice.service.js';
+import { type Status } from './types/invoice.types.js';
 
 @Controller('invoice')
 export class InvoiceController {
@@ -32,14 +33,15 @@ export class InvoiceController {
     @Session() session: UserSession,
     @Query('cursor') cursor: string,
     @Query('limit') limit: string,
+    @Query('status') status: Status,
   ) {
-    return this.invoiceService.findAll(session.user.id, cursor, limit);
+    return this.invoiceService.findAll(session.user.id, cursor, limit, status);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.invoiceService.findOne(+id);
-  // }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.invoiceService.findOne(id);
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateInvoiceDto: UpdateInvoiceDto) {

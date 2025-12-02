@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CreateInvoiceDto } from './dto/create-invoice.dto.js';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto.js';
+import { Status } from './types/invoice.types.js';
 
 @Injectable()
 export class InvoiceService {
@@ -31,7 +32,7 @@ export class InvoiceService {
     }
   }
 
-  async findAll(userId: string, cursor: string, limit: string) {
+  async findAll(userId: string, cursor: string, limit: string, status: Status) {
     try {
       if (!userId) {
         throw Error('user id is required to create an invoice');
@@ -41,7 +42,7 @@ export class InvoiceService {
         take,
         skip: cursor ? 1 : 0,
         cursor: cursor ? { id: cursor } : undefined,
-        where: { userId },
+        where: { userId, status: status ? status : undefined },
       });
 
       const nextCursor = invoices[invoices.length - 1]?.id ?? null;
@@ -51,9 +52,20 @@ export class InvoiceService {
     }
   }
 
-  // async findOne(id: number) {
-  //   return `This action returns a #${id} invoice`;
-  // }
+  async findOne(id: string) {
+    try {
+      if (!id) {
+        throw Error('invoice id is required to create an invoice');
+      }
+      const invoice = await this.prisma.invoice.findFirst({
+        where: { id },
+      });
+
+      return invoice;
+    } catch (error: unknown) {
+      return { message: 'Faild to get all invoices', error };
+    }
+  }
 
   async update(id: string, updateInvoiceDto: UpdateInvoiceDto) {
     try {

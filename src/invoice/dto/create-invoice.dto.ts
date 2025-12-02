@@ -6,7 +6,7 @@ export class CreateInvoiceDto {
   items: Item[];
   code: string;
   date: Date;
-  paymentTerm: Date;
+  paymentTerm: string;
   status: 'DRAFT' | 'PAID' | 'PENDING';
   description: string;
 }
