@@ -37,6 +37,7 @@ export class InvoiceService {
       if (!userId) {
         throw Error('user id is required to create an invoice');
       }
+      const total = await this.prisma.invoice.count()
       const take = parseInt(limit) || 6;
       const invoices = await this.prisma.invoice.findMany({
         take,
@@ -46,7 +47,7 @@ export class InvoiceService {
       });
 
       const nextCursor = invoices[invoices.length - 1]?.id ?? null;
-      return { nextCursor, invoices };
+      return { nextCursor, invoices, total };
     } catch (error: unknown) {
       return { message: 'Faild to get all invoices', error };
     }
